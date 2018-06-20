@@ -5,12 +5,19 @@ using UnityEngine;
 
 public delegate Vector3 Function(float u, float v, float t);
 
-public enum GraphFunctionName {
+public enum GraphFunctionName
+{
 	Sine,
 	MultiSine,
 	Sine2D,
 	MultiSine2D,
 	Ripple,
+	Cylinder,
+	InterestingCylinder,
+	Sphere,
+	InterestingSphere,
+	Torus,
+	InterestingTorus,
 }
 
 public class Graph3DController : MonoBehaviour
@@ -23,6 +30,11 @@ public class Graph3DController : MonoBehaviour
 	[SerializeField] private float _frequency = 4;
 	[SerializeField] private float _velocity = 2;
 	[SerializeField] private float _attenuation = 6;
+	[SerializeField] private float _height = 0.5f;
+	[SerializeField] private float _radius = 0.5f;
+	[SerializeField] private float _radius2 = 1f;
+	[SerializeField] private float _factorU = 6f;
+	[SerializeField] private float _factorV = 2f;
 
 	private List<List<Transform>> _points;
 	private float _step;
@@ -32,7 +44,11 @@ public class Graph3DController : MonoBehaviour
 	// Use this for initialization
 	private void Start()
 	{
-		_functions = new Function[] {SineFunction, MultiSineFunction, Sine2DFunction, MultiSine2DFunction, Ripple};
+		_functions = new Function[]
+		{
+			SineFunction, MultiSineFunction, Sine2DFunction, MultiSine2DFunction, Ripple, Cylinder, InterestingCylinder, Sphere, InterestingSphere,
+			Torus, InterestingTorus
+		};
 
 		_cube.SetActive(false);
 		_points = new List<List<Transform>>();
@@ -114,6 +130,63 @@ public class Graph3DController : MonoBehaviour
 		float y = Mathf.Sin(_frequency * Mathf.PI * (d - t / _velocity));
 		y *= 1 / (_amplitude + _attenuation * 2 * Mathf.PI * d);
 		var z = v;
+		return new Vector3(x, y, z);
+	}
+
+	private Vector3 Cylinder(float u, float v, float t)
+	{
+		var x = _radius * Mathf.Sin(Mathf.PI * u);
+		var y = _height * v;
+		var z = _radius * Mathf.Cos(Mathf.PI * u);
+		return new Vector3(x, y, z);
+	}
+
+	private Vector3 InterestingCylinder(float u, float v, float t)
+	{
+		var r = _radius * (0.8f + Mathf.Sin(Mathf.PI * (_factorU * u + _factorV * v + t)) * 0.2f);
+		var x = r * Mathf.Sin(Mathf.PI * u);
+		var y = _height * v;
+		var z = r * Mathf.Cos(Mathf.PI * u);
+		return new Vector3(x, y, z);
+	}
+	
+	private Vector3 Sphere(float u, float v, float t)
+	{
+		var r = _radius * Mathf.Cos(Mathf.PI / 2 * v);
+		var x = r * Mathf.Sin(Mathf.PI * u);
+		var y = _radius * Mathf.Sin(Mathf.PI / 2 * v);
+		var z = r * Mathf.Cos(Mathf.PI * u);
+		return new Vector3(x, y, z);
+	}
+	
+	private Vector3 InterestingSphere(float u, float v, float t)
+	{
+		var factor = 0.8f + Mathf.Sin(Mathf.PI * (_factorU * u + t)) * 0.1f;
+		factor += Mathf.Sin(Mathf.PI * (_factorV * v + t)) * 0.1f;
+		var r = factor * _radius * Mathf.Cos(Mathf.PI / 2 * v);
+		var x = r * Mathf.Sin(Mathf.PI * u);
+		var y = _radius * Mathf.Sin(Mathf.PI / 2 * v);
+		var z = r * Mathf.Cos(Mathf.PI * u);
+		return new Vector3(x, y, z);
+	}
+	
+	private Vector3 Torus(float u, float v, float t)
+	{
+		var r = _radius * Mathf.Cos(Mathf.PI * v) + _radius2;
+		var x = r * Mathf.Sin(Mathf.PI * u);
+		var y = _radius * Mathf.Sin(Mathf.PI * v);
+		var z = r * Mathf.Cos(Mathf.PI * u);
+		return new Vector3(x, y, z);
+	}
+	
+	private Vector3 InterestingTorus(float u, float v, float t)
+	{
+		float factor1 = 0.2f + Mathf.Sin(Mathf.PI * (_factorV * v + t)) * 0.05f;
+		float factor2 = 0.65f + Mathf.Sin(Mathf.PI * (_factorU * u + t)) * 0.1f;
+		var r = factor1 * _radius * Mathf.Cos(Mathf.PI * v) + factor2 * _radius2;
+		var x = r * Mathf.Sin(Mathf.PI * u);
+		var y = factor1 * Mathf.Sin(Mathf.PI * v);
+		var z = r * Mathf.Cos(Mathf.PI * u);
 		return new Vector3(x, y, z);
 	}
 }

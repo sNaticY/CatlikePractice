@@ -142,7 +142,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _resolution: 100
   _cube: {fileID: 162087537}
-  _function: 4
+  _function: 9
+  _amplitude: 3
+  _frequency: 4
+  _velocity: 2
+  _attenuation: 3
+  _height: 0.5
+  _radius: 0.5
+  _radius2: 1
+  _factorU: 6
+  _factorV: 2
 --- !u!4 &141239379
 Transform:
   m_ObjectHideFlags: 0
