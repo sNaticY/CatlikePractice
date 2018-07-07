@@ -45,7 +45,7 @@ public class Fractal : MonoBehaviour
 		{
 			RotateSpeed = Random.Range(-MaxRotateSpeed, MaxRotateSpeed);
 		}
-		transform.Rotate(0f, RotateSpeed * Time.deltaTime, 0f);
+		transform.Rotate(0f, 0f,  RotateSpeed * Time.deltaTime);
 	}
 
 	public void Initialize(Fractal parent, float size, Vector3 pos, Vector3 rot)
