@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7a5ed639a6f4ec39f403f03e19c5751, type: 3}
+  m_Name: Shapes
+  m_EditorClassIdentifier: 
+  _prefabs:
+  - {fileID: 114494196130679344, guid: 50fd0b7f9774c4e1da6a8d620ceb8483, type: 2}
+  - {fileID: 114531571844973190, guid: 1df12f0b2ac014ff294a605526bc717f, type: 2}
+  - {fileID: 114980766447402924, guid: 3b3a0dc1893024ecf8eb1d86e13caefd, type: 2}
+  _materials:
+  - {fileID: 2100000, guid: 66de9221b79a341eca94fb4f0d6f2357, type: 2}
+  - {fileID: 2100000, guid: ca3d5de31e5b74d8e921ae8e9ac6d366, type: 2}
+  - {fileID: 2100000, guid: 8135c7e5e51994c87b47591109323315, type: 2}

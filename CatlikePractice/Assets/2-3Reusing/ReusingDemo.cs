@@ -9,6 +9,7 @@ namespace Reusing
 		public ShapeFactory shapeFactory;
 
 		public KeyCode CreateKey = KeyCode.C;
+		public KeyCode destroyKey = KeyCode.X;
 		public KeyCode NewGameKey = KeyCode.N;
 		public KeyCode SaveKey = KeyCode.S;
 		public KeyCode LoadKey = KeyCode.L;
@@ -29,6 +30,9 @@ namespace Reusing
 			if (Input.GetKeyDown(CreateKey))
 			{
 				CreateObject();
+			}
+			else if (Input.GetKeyDown(destroyKey)) {
+				DestroyObject();
 			}
 			else if (Input.GetKey(NewGameKey))
 			{
@@ -53,6 +57,15 @@ namespace Reusing
 			t.localRotation = Random.rotation;
 			t.localScale = Vector3.one * Random.Range(0.1f, 1f);
 			_objectList.Add(instance);
+		}
+		
+		private void DestroyObject () {
+			if (_objectList.Count > 0)
+			{
+				int index = Random.Range(0, _objectList.Count);
+				Destroy(_objectList[index].gameObject);
+				_objectList.RemoveAt(index);
+			}
 		}
 
 		private void BeginNewGame()
