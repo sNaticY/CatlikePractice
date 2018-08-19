@@ -20,6 +20,12 @@ namespace Reusing
 
 		public PersistentStorage Storage;
 
+		public float CreationSpeed { get; set; }
+		public float DestructionSpeed { get; set; }
+
+		private float _creationProgress;
+		private float _destructionProgress;
+
 		private void Awake()
 		{
 			_objectList = new List<Shape>();
@@ -31,7 +37,8 @@ namespace Reusing
 			{
 				CreateObject();
 			}
-			else if (Input.GetKeyDown(destroyKey)) {
+			else if (Input.GetKeyDown(destroyKey))
+			{
 				DestroyObject();
 			}
 			else if (Input.GetKey(NewGameKey))
@@ -47,6 +54,20 @@ namespace Reusing
 				BeginNewGame();
 				Storage.Load(this);
 			}
+
+			_creationProgress += Time.deltaTime * CreationSpeed;
+			while (_creationProgress >= 1f)
+			{
+				_creationProgress -= 1f;
+				CreateObject();
+			}
+
+			_destructionProgress += Time.deltaTime * DestructionSpeed;
+			while (_destructionProgress >= 1f)
+			{
+				_destructionProgress -= 1f;
+				DestroyObject();
+			}
 		}
 
 		private void CreateObject()
@@ -58,13 +79,16 @@ namespace Reusing
 			t.localScale = Vector3.one * Random.Range(0.1f, 1f);
 			_objectList.Add(instance);
 		}
-		
-		private void DestroyObject () {
+
+		private void DestroyObject()
+		{
 			if (_objectList.Count > 0)
 			{
 				int index = Random.Range(0, _objectList.Count);
-				Destroy(_objectList[index].gameObject);
-				_objectList.RemoveAt(index);
+				shapeFactory.Reclaim(_objectList[index]);
+				int lastIndex = _objectList.Count - 1;
+				_objectList[index] = _objectList[lastIndex];
+				_objectList.RemoveAt(lastIndex);
 			}
 		}
 
@@ -72,7 +96,7 @@ namespace Reusing
 		{
 			for (int i = 0; i < _objectList.Count; i++)
 			{
-				Destroy(_objectList[i].gameObject);
+				shapeFactory.Reclaim(_objectList[i]);
 			}
 
 			_objectList.Clear();
