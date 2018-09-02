@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/2-3Reusing.unity
-    guid: 922a8f8f55cdd4835a4acfa405bb4f18
+    path: Assets/Scenes/2-4MultiScenes.unity
+    guid: 9fdf1f41f28034d8d8c9f35631096034
+  - enabled: 1
+    path: Assets/2-4MultiScenes/Level 1.unity
+    guid: 652a8a8c482794b74ab87b9700ceb2d9
+  - enabled: 1
+    path: Assets/2-4MultiScenes/Level 2.unity
+    guid: eeb4896a93d5641399cfbf77156ff1b6
   m_configObjects: {}
